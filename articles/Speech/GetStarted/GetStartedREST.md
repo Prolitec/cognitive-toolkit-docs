@@ -35,7 +35,7 @@ To use Speech API REST end point, the steps are as follows:
 
 The sections following will provide more details.
 
-## Get access token
+## Get authorization token
 To access the REST endpoint, you need a valid OAuth token. To get this token, you must first have a subscription key from the Speech API, as described [here](GetStartedREST##Prerequisites). Then you can send a POST request to the token service with the subscription key, and will receive in the response the access token back as a JSON Web Token (JWT), which will be passed through in the Speech request header.
 
 > [!NOTE]
@@ -125,16 +125,17 @@ To preform speech recognition, you need to make a POST request to the Microsoft 
  
 ### REST end point
 
-The service for Microsoft Speech API is hosted by ```https:://speech.platform.bing.com```. The URI path for the REST endpoints consists of *recognition mode*, *version*, *language*, *format* and *request id*. 
+The URI for the REST endpoints of speech service is built as follows: 
+```
+https://speech.platform.bing.com/speech/recognition/<RECOGNITION_MODE>/cognitiveservices/v1?language=<LANG_CODE>&format=<OUTPUT_FORMAT>
+```
 
+<RECOGNITION_MODE> specifies the recognition mode. It must be of the following values: `interactive`, `conversation`, or `dictation`. Please replace <RECOGNITION_MODE> with the mode you want to use. In this example we use interactive mode. Please find more information on recognition mode in the [How to choose recognition mode](How-to/how-to-choose-recognition-mode) page. 
 
-The value of recognition mode must be *interactive*, *conversation*, or *dictation*. In this example we use interactive mode. Please find more information on recognition mode in the [Concepts](Concepts) page. 
+<LANG_CODE> specifies the target language for audio convertion. You can find the complete list of languages and their code supported by the Speech service in . For example, en-us represents English (United States). A complete list supported languages and their code can be found in the is described 
 
-The langauge is described 
+The allowed values for *format* are `simple` and `detailed`. It is an optional parameter. By default the service returns simple results. Please fine detailed description in the [Reference](Reference) page. 
 
-The format 
-
-The request id
 
 An exmaple of service URI is as follows
 
@@ -191,7 +192,7 @@ request.Headers["Authorization"] = "Bearer " + token;
 ```
 ---
 
-The follow is a sample request payload:
+The follow is a sample request payload. Please note that the token in the Autorization header is just an example.
 
 ```
 POST https://speech.platform.bing.com/speech/recognition/interactive/cognitiveservices/v1?language=en-US&format=detailed&requestid=39530efe-5677-416a-98b0-93e13ec93c2b HTTP/1.1
