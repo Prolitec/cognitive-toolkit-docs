@@ -18,16 +18,16 @@ With Microsoft Speech API, you can develop applications using REST API to conver
 
 ## Prerequisites
 
-#### Subscribe to Speech API and get a free trial subscription key
+### Subscribe to Speech API and get a free trial subscription key
 To access the REST end point, you must first subscribe to Speech API, which is part of Microsoft Cognitive Services (previously Project Oxford). After subscribing, you will have the necessary subscription keys that are needed in the following operations. Both the primary and secondary keys can be used. For subscription and key management details, see [Subscriptions](https://azure.microsoft.com/en-us/try/cognitive-services/).
 
-#### Precorded audio file
+### Precorded audio file
 In this example, we use a recorded audio file to illustrate the usage of the REST API. Please record a short audio file of you saying something short (e.g.: *"What is the weather like today?"* or *"Find funny movies to watch."*). The Microsoft Speech API also supports external microphone input. Please see the [sample applications](samples) for how to use microphone input.
 
 > [!NOTE]
 > The example requires that audio is recorded as wav file with **PCM single channel (mono), 16000 Hz**.
 
-# Getting started
+## Getting started
 To use Speech API REST end point, the steps are as follows:
 1. Authenticate and get a JSON Web Token (JWT) from the token service.
 2. Set the proper request header and send the request to Bing Speech API REST end point.
@@ -35,8 +35,8 @@ To use Speech API REST end point, the steps are as follows:
 
 The sections following provides more details.
 
-## Get authorization token
-To access the REST endpoint, you need a valid OAuth token. To get this token, you must first have a subscription key from the Speech API, as described [here](GetStartedREST##Prerequisites). Then you can send a POST request to the token service with the subscription key, and receives in the response the access token back as a JSON Web Token (JWT), which is passed through in the Speech request header.
+### Get authorization token
+To access the REST endpoint, you need a valid authorization token. To get this token, you must first have a subscription key from the Speech API, as described [here](GetStartedREST##Prerequisites). Then you can send a POST request to the token service with the subscription key, and receives in the response the access token back as a JSON Web Token (JWT), which is passed through in the Speech request header.
 
 > [!NOTE]
 > The token has an expiry of 10 minutes. Please see the Authentication(How-to/how-to-authentication) section for how to renew the token. 
@@ -121,49 +121,66 @@ Content-Length: 0
 Connection: Keep-Alive
 ```
 
-## Send recognition request to the speech service 
+### Send recognition request to the speech service 
 
-To perform speech recognition, you need to make a POST request to the Microsoft speech service with proper request header and body. 
+To perform speech recognition, you need to make a POST request to the Microsoft speech service end points with proper request header and body. 
  
-### REST end points
+#### REST end points
 
-The URI for the REST endpoints of speech service is built as follows:
+The URI for the REST endpoints of speech service is defined as follows:
 ```
-https://speech.platform.bing.com/speech/recognition/<RECOGNITION_MODE>/cognitiveservices/v1?language=<LANG_CODE>&format=<OUTPUT_FORMAT>
+https://speech.platform.bing.com/speech/recognition/<RECOGNITION_MODE>/cognitiveservices/v1?language=<LANGUAGE_TAG>&format=<OUTPUT_FORMAT>
 ```
 
-<RECOGNITION_MODE> specifies the recognition mode. It must be of the following values: `interactive`, `conversation`, or `dictation`. Please replace <RECOGNITION_MODE> with the mode you want to use. Please find more information on recognition mode in the [How to choose recognition mode](How-to/how-to-choose-recognition-mode) page.
+`<RECOGNITION_MODE>` specifies the recognition mode. It must be of the following values: `interactive`, `conversation`, or `dictation`. More information on recognition mode can be found in the [How to choose recognition mode](How-to/how-to-choose-recognition-mode) page.
 
-<LANG_CODE> specifies the target language for audio conversion. You can find the complete list of languages and their code supported by the Speech service in. For example, en-us represents English (United States).
+`<LANGUAGE_TAG>` specifies the target language for audio conversion. Its value is given in the IETF language tag [BCP 47](https://en.wikipedia.org/wiki/IETF_language_tag) format, and must be one of the languages that are supported by the service. For example, en-us represents English (United States). The complete list of languages supported by the Speech service can be found in the page [Supported Languages](API-Reference-REST/SupportedLanguages).
 
-<OUTPUT_FOMAT> is optional. Allowed values are `simple` and `detailed`. By default the service returns simple results. Please find detailed description in the [Reference](Reference) page. 
+`OUTPUT_FOMAT` is an optional parameter. Allowed values are `simple` and `detailed`. By default the service returns simple results. Please find detailed description about output format in the [Reference](Reference) page. 
 
 Some examples of service URI are 
-| | URI |
-|---|---|
-| 
-```
-https://speech.platform.bing.com/speech/recognition/<YOUR_RECOGNITION_MODE>/cognitiveservices/v1?language=en-us
-```
+| Recognition mode  | Language | Output format | End point URI |
+|---|---|---|---|
+| interactive | pt-BR | default | https://speech.platform.bing.com/speech/recognition/interactive/cognitiveservices/v1?language=pt-BR | 
+| conversation | en-US | detailed | https://speech.platform.bing.com/speech/recognition/conversation/cognitiveservices/v1?language=en-US&format=detailed |
+| dictation | fr-FR | simple | https://speech.platform.bing.com/speech/recognition/dictation/cognitiveservices/v1?language=fr-FR&format=simple |
 
-## Request headers
+#### Request headers
 
 The follow fields must be set in the request header.
 
-Authorization: 
-ContentType:
+* `Authorization`: The autorization field must specify `Bearer` as type and use the authorization token you have gotten from the token service as credentials. 
+* `Content-type`: The Content-type field describes the format and technical properties of the audio stream. Currently only wav file and PCM Mono 16000 encoding is supported, and the Content-type value for this format is `audio/wav; codec=audio/pcm; samplerate=16000`.
+
+The field `Transfer-Encoding` is optional. Setting this field to `chunked` allows you to chop the audio into small chunks. More information is provided in the page [Chunked Transfer](How-to/how-to-chunked-transfer).
+
+The follow is a sample request header. Please note that the token in the Authorization header is just an example.
+
+```
+POST https://speech.platform.bing.com/speech/recognition/interactive/cognitiveservices/v1?language=en-US&format=detailed HTTP/1.1
+Accept: application/json;text/xml
+Content-Type: audio/wav; codec=audio/pcm; samplerate=16000
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzY29wZSI6Imh0dHBzOi8vc3BlZWNoLnBsYXRmb3JtLmJpbmcuY29tIiwic3Vic2NyaXB0aW9uLWlkIjoiMWRjYWQxZTQzZWZlNDM2MmIzMjg2ZWY2OTIzYTA5MjYiLCJwcm9kdWN0LWlkIjoiQmluZy5TcGVlY2guRjAiLCJjb2duaXRpdmUtc2VydmljZXMtZW5kcG9pbnQiOiJodHRwczovL2FwaS5jb2duaXRpdmUubWljcm9zb2Z0LmNvbS9pbnRlcm5hbC92MS4wLyIsImF6dXJlLXJlc291cmNlLWlkIjoiL3N1YnNjcmlwdGlvbnMvYTM0Y2FkYmYtNTU5My00ZWYxLWI0MjItMDJhMDMyNmQ2NmZkL3Jlc291cmNlR3JvdXBzL1Rlc3QvcHJvdmlkZXJzL01pY3Jvc29mdC5Db2duaXRpdmVTZXJ2aWNlcy9hY2NvdW50cy9UZXN0U1BlZWNoIiwiaXNzIjoidXJuOm1zLmNvZ25pdGl2ZXNlcnZpY2VzIiwiYXVkIjoidXJuOm1zLnNwZWVjaCIsImV4cCI6MTQ5MzQyOTE2OX0._Bhx7nneMto2gjAAwmIO6eiSejQ2Nqhd8xFl0odjk40
+Host: speech.platform.bing.com
+Transfer-Encoding: chunked
+Expect: 100-continue
+```
+
+#### Send request to the service
+
+The following example shows how to send a speech recognition request to Microsoft speech service. We use the `interactive` recognition mode. Please replace `YOUR_AUDIO_FILE` with path to your prerecorded audio file, and `YOUR_ACCESS_TOKEN` with the authorization token you got from the token service.
 
 # [Powershell](#tab/Powershell)
 ```Powershell
 
 $SpeechServiceURI =
-'https://speech.platform.bing.com/speech/recognition/interactive/cognitiveservices/v1?language=en-us&locale=en&format=detailed&requestid=2ed7cbc9-a214-44f3-851c-ae53e5'
+'https://speech.platform.bing.com/speech/recognition/interactive/cognitiveservices/v1?language=en-us&format=detailed'
 
-# $OAuthToken is the access token returned by the token service. 
+# $OAuthToken is the authrization token returned by the token service.
 $RecoRequestHeader = @{
   'Authorization' = 'Bearer '+ $OAuthToken;
   'Transfer-Encoding' = 'chunked'
-  'Content-type' = 'audio/wav; codec="audio/pcm"; samplerate=16000'
+  'Content-type' = 'audio/wav; codec=audio/pcm; samplerate=16000'
 }
 
 # Read audio into byte array
@@ -178,7 +195,7 @@ $Response
 
 # [cURL](#tab/cURL)
 ```
-curl -v -X POST "https://speech.platform.bing.com/speech/recognition/interactive/cognitiveservices/v1?language=pt-BR&locale=your_locale&format=your_format&requestid=your_guid" -H "Transfer-Encoding: chunked" -H 'Authorization: Bearer your_access_token' -H 'Content-type: audio/wav; codec="audio/pcm"; samplerate=16000' --data-binary @YOUR_AUDIO_FILE
+curl -v -X POST "https://speech.platform.bing.com/speech/recognition/interactive/cognitiveservices/v1?language=en-us&format=detailed" -H "Transfer-Encoding: chunked" -H "Authorization: Bearer YOUR_ACCESS_TOKEN" -H "Content-type: audio/wav; codec=audio/pcm; samplerate=16000" --data-binary @YOUR_AUDIO_FILE
 ```
 
 # [C#](#tab/CSharp)
@@ -190,32 +207,10 @@ request.Accept = @"application/json;text/xml";
 request.Method = "POST";
 request.ProtocolVersion = HttpVersion.Version11;
 request.Host = @"speech.platform.bing.com";
-request.ContentType = @"audio/wav; codec=""audio/pcm""; samplerate=16000";
+request.ContentType = @"audio/wav; codec=audio/pcm; samplerate=16000";
 request.Headers["Authorization"] = "Bearer " + token;
-```
----
 
-The follow is a sample request payload. Please note that the token in the Authorization header is just an example.
-
-```
-POST https://speech.platform.bing.com/speech/recognition/interactive/cognitiveservices/v1?language=en-US&format=detailed&requestid=39530efe-5677-416a-98b0-93e13ec93c2b HTTP/1.1
-Accept: application/json;text/xml
-Content-Type: audio/wav; codec="audio/pcm"; samplerate=16000
-Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzY29wZSI6Imh0dHBzOi8vc3BlZWNoLnBsYXRmb3JtLmJpbmcuY29tIiwic3Vic2NyaXB0aW9uLWlkIjoiMWRjYWQxZTQzZWZlNDM2MmIzMjg2ZWY2OTIzYTA5MjYiLCJwcm9kdWN0LWlkIjoiQmluZy5TcGVlY2guRjAiLCJjb2duaXRpdmUtc2VydmljZXMtZW5kcG9pbnQiOiJodHRwczovL2FwaS5jb2duaXRpdmUubWljcm9zb2Z0LmNvbS9pbnRlcm5hbC92MS4wLyIsImF6dXJlLXJlc291cmNlLWlkIjoiL3N1YnNjcmlwdGlvbnMvYTM0Y2FkYmYtNTU5My00ZWYxLWI0MjItMDJhMDMyNmQ2NmZkL3Jlc291cmNlR3JvdXBzL1Rlc3QvcHJvdmlkZXJzL01pY3Jvc29mdC5Db2duaXRpdmVTZXJ2aWNlcy9hY2NvdW50cy9UZXN0U1BlZWNoIiwiaXNzIjoidXJuOm1zLmNvZ25pdGl2ZXNlcnZpY2VzIiwiYXVkIjoidXJuOm1zLnNwZWVjaCIsImV4cCI6MTQ5MzQyOTE2OX0._Bhx7nneMto2gjAAwmIO6eiSejQ2Nqhd8xFl0odjk40
-Host: speech.platform.bing.com
-Transfer-Encoding: chunked
-Expect: 100-continue
-```
-
-## Chunked transfer encoding
-Bing Speech API supports chunked transfer encoding for efficient audio streaming. To transcribe speech to text, you can send the audio as one whole chunk or you can chop the audio into small chunks. For efficient audio transcription it is recommended that you use [chunked transfer encoding](https://en.wikipedia.org/wiki/Chunked_transfer_encoding) to stream the audio to the service. Other implementations may result in higher user-perceived latency. 
-
-> [!NOTE]
-> You may not upload more than 10 seconds of audio in any one request and the total request duration cannot exceed 14 seconds. 
-
-The code snippet below shows an example of an audio file being chunked into 1024 byte chunks.
-
-```cs
+// Send an audio file by 1024 byte chunks
 using (fs = new FileStream(audioFile, FileMode.Open, FileAccess.Read))
 {
 
@@ -240,8 +235,9 @@ using (fs = new FileStream(audioFile, FileMode.Open, FileAccess.Read))
     }
 }
 ```
+---
 
-## Speech recognition response
+#### Speech recognition response
 After processing the request, Bing Speech API returns the results in a response as JSON format. The code snippet below shows an example of how you can read the response from the stream:
 
 ```cs
