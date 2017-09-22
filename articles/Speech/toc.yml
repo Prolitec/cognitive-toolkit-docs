@@ -35,4 +35,6 @@
     href: API-Reference-REST/BingVoiceOutput.md
   - name: Websocket Protocol
     href: API-Reference-REST/websocketprotocol.md
+  - name: Supported Languages
+    href: API-Reference-REST/supportedlanguages.md
 - name: Resources

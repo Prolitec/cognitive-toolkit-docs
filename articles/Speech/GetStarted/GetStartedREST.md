@@ -64,6 +64,8 @@ $OAuthToken
 
 ```
 # [cURL](#tab/cURL)
+The examples below assume running curl on Linux using bash or Cygwin on Windows. You may need to install curl if it is not available on your platform. The examples should work in Git Bash, zsh, and other shells too.
+
 ```
     curl -v -X POST "https://api.cognitive.microsoft.com/sts/v1.0/issueToken" -H "Content-type: application/x-www-form-urlencoded" -H "Content-Length: 0" -H "Ocp-Apim-Subscription-Key: YOUR_SUBSCRIPTION_KEY"
 ```
@@ -123,22 +125,23 @@ Connection: Keep-Alive
 
 To preform speech recognition, you need to make a POST request to the Microsoft speech service with proper request header and body. 
  
-### REST end point
+### REST end points
 
-The URI for the REST endpoints of speech service is built as follows: 
+The URI for the REST endpoints of speech service is built as follows:
 ```
 https://speech.platform.bing.com/speech/recognition/<RECOGNITION_MODE>/cognitiveservices/v1?language=<LANG_CODE>&format=<OUTPUT_FORMAT>
 ```
 
-<RECOGNITION_MODE> specifies the recognition mode. It must be of the following values: `interactive`, `conversation`, or `dictation`. Please replace <RECOGNITION_MODE> with the mode you want to use. In this example we use interactive mode. Please find more information on recognition mode in the [How to choose recognition mode](How-to/how-to-choose-recognition-mode) page. 
+<RECOGNITION_MODE> specifies the recognition mode. It must be of the following values: `interactive`, `conversation`, or `dictation`. Please replace <RECOGNITION_MODE> with the mode you want to use. Please find more information on recognition mode in the [How to choose recognition mode](How-to/how-to-choose-recognition-mode) page.
 
 <LANG_CODE> specifies the target language for audio convertion. You can find the complete list of languages and their code supported by the Speech service in . For example, en-us represents English (United States). A complete list supported languages and their code can be found in the is described 
 
-The allowed values for *format* are `simple` and `detailed`. It is an optional parameter. By default the service returns simple results. Please fine detailed description in the [Reference](Reference) page. 
+<OUTPUT_FOMAT> is optional. Allowed values are `simple` and `detailed`. By default the service returns simple results. Please fine detailed description in the [Reference](Reference) page. 
 
-
-An exmaple of service URI is as follows
-
+Some examples of service URI are 
+| | URI |
+|---|---|
+| 
 ```
 https://speech.platform.bing.com/speech/recognition/<YOUR_RECOGNITION_MODE>/cognitiveservices/v1?language=en-us
 ```
