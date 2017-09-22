@@ -186,10 +186,10 @@ $RecoRequestHeader = @{
 # Read audio into byte array
 $audioBytes = [System.IO.File]::ReadAllBytes("YOUR_AUDIO_FILE")
 
-$Response = Invoke-RestMethod -Method POST -Uri $SpeechServiceURI -Headers $RecoRequestHeader -Body $audioBytes
+$RecoResponse = Invoke-RestMethod -Method POST -Uri $SpeechServiceURI -Headers $RecoRequestHeader -Body $audioBytes
 
 # Show the result
-$Response
+$RecoResponse
 
 ```
 
@@ -240,6 +240,13 @@ using (fs = new FileStream(audioFile, FileMode.Open, FileAccess.Read))
 #### Speech recognition response
 After processing the request, Bing Speech API returns the results in a response as JSON format. The code snippet below shows an example of how you can read the response from the stream:
 
+# [Powershell](#tab/Powershell)
+```Powershell
+# show the response in JSON format
+ConvertTo-Json $RecoResponse
+```
+
+# [C#](#tab/CSharp)
 ```cs
 /*
 * Get the response from the service.
@@ -258,6 +265,7 @@ using (WebResponse response = request.GetResponse())
     Console.ReadLine();
 }
 ```
+---
 
 The following is a sample JSON response:
 
