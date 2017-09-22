@@ -14,18 +14,18 @@ ms.author: zhouwang
 
 # Get Started with Speech Recognition using REST API
 
-With Microsoft Speech API you can develop applications using REST API to convert spoken audio to text. This article will help you to do speech recognition via REST end point. 
+With Microsoft Speech API, you can develop applications using REST API to convert spoken audio to text. This article helps you to do speech recognition via REST end point. 
 
 ## Prerequisites
 
 #### Subscribe to Speech API and get a free trial subscription key
-To access the REST end point, you must first subscribe to Speech API which is part of Microsoft Cognitive Services (previously Project Oxford). After subscribing, you will have the necessary subscription keys which are needed in the following operations. Both the primary and secondary keys can be used. For subscription and key management details, see [Subscriptions](https://azure.microsoft.com/en-us/try/cognitive-services/).
+To access the REST end point, you must first subscribe to Speech API, which is part of Microsoft Cognitive Services (previously Project Oxford). After subscribing, you will have the necessary subscription keys that are needed in the following operations. Both the primary and secondary keys can be used. For subscription and key management details, see [Subscriptions](https://azure.microsoft.com/en-us/try/cognitive-services/).
 
 #### Precorded audio file
-In this example, we use a recorded audio file to illustrate the usage of the REST API. Please record a short audio file of you saying something short (e.g.: *"What is the weather like today?"* or *"Find funny movies to watch."*). The Microsoft Speech API also supports exteranl microphone input. Please see the [sample applications](samples) for how to use microphone input.
+In this example, we use a recorded audio file to illustrate the usage of the REST API. Please record a short audio file of you saying something short (e.g.: *"What is the weather like today?"* or *"Find funny movies to watch."*). The Microsoft Speech API also supports external microphone input. Please see the [sample applications](samples) for how to use microphone input.
 
 > [!NOTE]
-> The example requires that audio is recorded as wav file with **PCM single channel (mono), 16000Hz**.
+> The example requires that audio is recorded as wav file with **PCM single channel (mono), 16000 Hz**.
 
 # Getting started
 To use Speech API REST end point, the steps are as follows:
@@ -33,10 +33,10 @@ To use Speech API REST end point, the steps are as follows:
 2. Set the proper request header and send the request to Bing Speech API REST end point.
 3. Parse the response to get your transcribed text.
 
-The sections following will provide more details.
+The sections following provides more details.
 
 ## Get authorization token
-To access the REST endpoint, you need a valid OAuth token. To get this token, you must first have a subscription key from the Speech API, as described [here](GetStartedREST##Prerequisites). Then you can send a POST request to the token service with the subscription key, and will receive in the response the access token back as a JSON Web Token (JWT), which will be passed through in the Speech request header.
+To access the REST endpoint, you need a valid OAuth token. To get this token, you must first have a subscription key from the Speech API, as described [here](GetStartedREST##Prerequisites). Then you can send a POST request to the token service with the subscription key, and receives in the response the access token back as a JSON Web Token (JWT), which is passed through in the Speech request header.
 
 > [!NOTE]
 > The token has an expiry of 10 minutes. Please see the Authentication(How-to/how-to-authentication) section for how to renew the token. 
@@ -47,7 +47,7 @@ The token service URI is located here:
 https://api.cognitive.microsoft.com/sts/v1.0/issueToken
 ```
 
-The code below is an example implementation in C# for how to handle authentication. Please replace *YOUR_SUBSCRIPTION_KEY* with your own subscription key.
+The code following is an example implementation in C# for how to handle authentication. Please replace *YOUR_SUBSCRIPTION_KEY* with your own subscription key.
 
 # [Powershell](#tab/Powershell)
 ```Powershell
@@ -64,7 +64,7 @@ $OAuthToken
 
 ```
 # [cURL](#tab/cURL)
-The examples below assume running curl on Linux using bash or Cygwin on Windows. You may need to install curl if it is not available on your platform. The examples should work in Git Bash, zsh, and other shells too.
+The example assumes running curl on Linux using bash or Cygwin on Windows. You may need to install curl if it is not available on your platform. The examples should work in Git Bash, zsh, and other shells too.
 
 ```
     curl -v -X POST "https://api.cognitive.microsoft.com/sts/v1.0/issueToken" -H "Content-type: application/x-www-form-urlencoded" -H "Content-Length: 0" -H "Ocp-Apim-Subscription-Key: YOUR_SUBSCRIPTION_KEY"
@@ -123,7 +123,7 @@ Connection: Keep-Alive
 
 ## Send recognition request to the speech service 
 
-To preform speech recognition, you need to make a POST request to the Microsoft speech service with proper request header and body. 
+To perform speech recognition, you need to make a POST request to the Microsoft speech service with proper request header and body. 
  
 ### REST end points
 
@@ -134,9 +134,9 @@ https://speech.platform.bing.com/speech/recognition/<RECOGNITION_MODE>/cognitive
 
 <RECOGNITION_MODE> specifies the recognition mode. It must be of the following values: `interactive`, `conversation`, or `dictation`. Please replace <RECOGNITION_MODE> with the mode you want to use. Please find more information on recognition mode in the [How to choose recognition mode](How-to/how-to-choose-recognition-mode) page.
 
-<LANG_CODE> specifies the target language for audio convertion. You can find the complete list of languages and their code supported by the Speech service in . For example, en-us represents English (United States). A complete list supported languages and their code can be found in the is described 
+<LANG_CODE> specifies the target language for audio conversion. You can find the complete list of languages and their code supported by the Speech service in. For example, en-us represents English (United States).
 
-<OUTPUT_FOMAT> is optional. Allowed values are `simple` and `detailed`. By default the service returns simple results. Please fine detailed description in the [Reference](Reference) page. 
+<OUTPUT_FOMAT> is optional. Allowed values are `simple` and `detailed`. By default the service returns simple results. Please find detailed description in the [Reference](Reference) page. 
 
 Some examples of service URI are 
 | | URI |
@@ -150,7 +150,7 @@ https://speech.platform.bing.com/speech/recognition/<YOUR_RECOGNITION_MODE>/cogn
 
 The follow fields must be set in the request header.
 
-Atuorization: 
+Authorization: 
 ContentType:
 
 # [Powershell](#tab/Powershell)
@@ -195,7 +195,7 @@ request.Headers["Authorization"] = "Bearer " + token;
 ```
 ---
 
-The follow is a sample request payload. Please note that the token in the Autorization header is just an example.
+The follow is a sample request payload. Please note that the token in the Authorization header is just an example.
 
 ```
 POST https://speech.platform.bing.com/speech/recognition/interactive/cognitiveservices/v1?language=en-US&format=detailed&requestid=39530efe-5677-416a-98b0-93e13ec93c2b HTTP/1.1
@@ -208,7 +208,7 @@ Expect: 100-continue
 ```
 
 ## Chunked transfer encoding
-Bing Speech API supports chuncked transfer encoding for efficient audio streaming. To transcribe speech to text, you can send the audio as one whole chunk or you can chop the audio into small chunks. For efficient audio transcription it is recommended that you use [chunked transfer encoding](https://en.wikipedia.org/wiki/Chunked_transfer_encoding) to stream the audio to the service. Other implementations may result in higher user-perceived latency. 
+Bing Speech API supports chunked transfer encoding for efficient audio streaming. To transcribe speech to text, you can send the audio as one whole chunk or you can chop the audio into small chunks. For efficient audio transcription it is recommended that you use [chunked transfer encoding](https://en.wikipedia.org/wiki/Chunked_transfer_encoding) to stream the audio to the service. Other implementations may result in higher user-perceived latency. 
 
 > [!NOTE]
 > You may not upload more than 10 seconds of audio in any one request and the total request duration cannot exceed 14 seconds. 
