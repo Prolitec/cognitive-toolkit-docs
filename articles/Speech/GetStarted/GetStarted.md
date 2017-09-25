@@ -14,6 +14,6 @@ ms.author: zhouwang
 
 # Get Started with Microsoft Speech API
 
-You can get started to use Microsoft Speech Service with [REST APIs](GetStarted/GetStartedREST.md) or through [client libraries](GetStarted/GetStartedClientLibraries.md.md).
+You can access Microsoft Speech Service by using [REST APIs](GetStarted/GetStartedREST.md) or [client libraries](GetStarted/GetStartedClientLibraries.md).
 
 
