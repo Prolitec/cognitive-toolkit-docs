@@ -60,10 +60,11 @@ $OAuthToken
 
 ```
 # [curl](#tab/curl)
-The example uses curl on Linux with bash. You may need to install curl, if it is not available on your platform. The example should work on Cygwin on Windows, Git Bash, zsh, and other shells too.
-
 ```
-    curl -v -X POST "https://api.cognitive.microsoft.com/sts/v1.0/issueToken" -H "Content-type: application/x-www-form-urlencoded" -H "Content-Length: 0" -H "Ocp-Apim-Subscription-Key: YOUR_SUBSCRIPTION_KEY"
+# The example uses curl on Linux with bash. You may need to install curl, if it is not available on your platform. 
+# The example should work on Cygwin on Windows, Git Bash, zsh, and other shells too.
+
+curl -v -X POST "https://api.cognitive.microsoft.com/sts/v1.0/issueToken" -H "Content-type: application/x-www-form-urlencoded" -H "Content-Length: 0" -H "Ocp-Apim-Subscription-Key: YOUR_SUBSCRIPTION_KEY"
 ```
 
 # [C#](#tab/CSharp)
@@ -103,7 +104,6 @@ The example uses curl on Linux with bash. You may need to install curl, if it is
         }
     }
 ```
-
 ---
 
 The POST request sent to the token service by the preceding example looks like as follows:
