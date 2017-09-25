@@ -63,10 +63,9 @@ $OAuthToken
 
 # [curl](#tab/curl)
 
-```
-# The example uses curl on Linux with bash. You may need to install curl, if it is not available on your platform. 
-# The example should work on Cygwin on Windows, Git Bash, zsh, and other shells too.
+The example uses curl on Linux with bash. You may need to install curl, if it is not available on your platform. The example should work on Cygwin on Windows, Git Bash, zsh, and other shells too.
 
+```
 curl -v -X POST "https://api.cognitive.microsoft.com/sts/v1.0/issueToken" -H "Content-type: application/x-www-form-urlencoded" -H "Content-Length: 0" -H "Ocp-Apim-Subscription-Key: YOUR_SUBSCRIPTION_KEY"
 ```
 
@@ -195,7 +194,7 @@ $RecoResponse
 
 ```
 
-# [cURL](#tab/cURL)
+# [curl](#tab/curl)
 
 ```
 curl -v -X POST "https://speech.platform.bing.com/speech/recognition/interactive/cognitiveservices/v1?language=en-us&format=detailed" -H "Transfer-Encoding: chunked" -H "Authorization: Bearer YOUR_ACCESS_TOKEN" -H "Content-type: audio/wav; codec=audio/pcm; samplerate=16000" --data-binary @YOUR_AUDIO_FILE
@@ -251,6 +250,10 @@ After processing the request, Microsoft Speech Service returns the results in a 
 # show the response in JSON format
 ConvertTo-Json $RecoResponse
 ```
+
+# [curl](#tab/curl)
+
+curl shows the response message as string. You may need addtional tools, e.g. json-reformat, to format the message into JSON format.
 
 # [C#](#tab/CSharp)
 
