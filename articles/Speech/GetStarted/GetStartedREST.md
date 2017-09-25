@@ -129,11 +129,11 @@ The URI for the REST endpoints of speech service is defined as follows:
 https://speech.platform.bing.com/speech/recognition/<RECOGNITION_MODE>/cognitiveservices/v1?language=<LANGUAGE_TAG>&format=<OUTPUT_FORMAT>
 ```
 
-`<RECOGNITION_MODE>` specifies the recognition mode. It must be of the following values: `interactive`, `conversation`, or `dictation`. More information on recognition mode can be found in the [How to choose recognition mode](How-to/how-to-choose-recognition-mode) page.
+`<RECOGNITION_MODE>` specifies the recognition mode, and must be of the following values: `interactive`, `conversation`, or `dictation`. It is a part of resource path in the URI. For more information on recognition mode see the [How to choose recognition mode](How-to/how-to-choose-recognition-mode.md) page.
 
-`<LANGUAGE_TAG>` specifies the target language for audio conversion. Its value is given in the IETF language tag [BCP 47](https://en.wikipedia.org/wiki/IETF_language_tag) format, and must be one of the languages that are supported by the service. For example, en-us represents English (United States). The complete list of languages supported by the Speech service can be found in the page [Supported Languages](API-Reference-REST/SupportedLanguages).
+`<LANGUAGE_TAG>` describes the target language for audio conversion. It is required, and specified as a part of query string in the URI. It has the value as defined in the IETF language tag [BCP 47](https://en.wikipedia.org/wiki/IETF_language_tag), and must be one of the languages that are supported by the service. For example, en-us represents English (United States). The complete list of languages supported by the Speech service can be found in the page [Supported Languages](API-Reference-REST/supportedlanguages.md).
 
-`OUTPUT_FOMAT` is an optional parameter. Allowed values are `simple` and `detailed`. By default the service returns simple results. Please find detailed description about output format in the [Reference](Reference) page. 
+`<OUTPUT_FOMAT>` is an optional parameter in the query string. Its allowed values are `simple` and `detailed`. By default the service returns results in `simple` format. For details see the [Output Format](api-reference-rest/bingvoicerecognition#output-format) page.
 
 Some examples of service URI are 
 | Recognition mode  | Language | Output format | End point URI |
