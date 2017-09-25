@@ -3,6 +3,7 @@
 - name: Overview
   href: Home.md
 - name: Get started
+  href: GetStarted/GetStarted.md
   items:
   - name: REST  
     href: GetStarted/GetStartedREST.md
