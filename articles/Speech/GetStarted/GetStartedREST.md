@@ -251,6 +251,10 @@ After processing the request, Microsoft Speech Service returns the results in a 
 ConvertTo-Json $RecoResponse
 ```
 
+# [curl](#tab/curl)
+
+# curl directly returns the response message in string. If you want to show it in JSON format, you can use addtional tools, e.g. jq.
+
 # [C#](#tab/CSharp)
 
 ```cs
