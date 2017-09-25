@@ -253,7 +253,7 @@ ConvertTo-Json $RecoResponse
 
 # [curl](#tab/curl)
 
-# curl directly returns the response message in string. If you want to show it in JSON format, you can use addtional tools, e.g. jq.
+curl directly returns the response message in string. If you want to show it in JSON format, you can use addtional tools, e.g. jq.
 
 ```
 curl -X POST "https://speech.platform.bing.com/speech/recognition/interactive/cognitiveservices/v1?language=en-us&format=detailed" -H "Transfer-Encoding: chunked" -H "Authorization: Bearer YOUR_ACCESS_TOKEN" -H "Content-type: audio/wav; codec=audio/pcm; samplerate=16000" --data-binary @YOUR_AUDIO_FILE | jq
