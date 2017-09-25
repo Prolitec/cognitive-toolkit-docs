@@ -24,7 +24,7 @@ The *Speech to Text* API *transcribes* audio streams into text that your applica
 * Support many spoken languages in multiple dialects. For the full list of supported languages in
 each recognition mode, see [Recognition Languages](api-reference-rest/bingvoicerecognition.md#recognition-language).
 * Leverage powerful speech recognition technologies that are used by Cortana, Office Dictation, Office Translator, and other Microsoft products.
-* Multiple recognition modes to enable optimized results in different user scenarios. The *Speech to Text* APIs currently support *interactive*, *conversation*, and *dictation* mode.
+* Multiple recognition modes to enable optimized results in different user scenarios. The *Speech to Text APIs currently supports *interactive*, *conversation*, and *dictation* mode.
 * Real-time continuous recognition. The *Speech to Text* supports client to receive the interim recognition results of the words that have been recognized so far. The speech service also supports end-of-speech detection.
 * Support capitalization and punctuation, masking profanity, and text normalization.
 * Integration with language understanding. Besides converting the input audio into text, the *Speech to Text* provides applications an additional capability to understand what the text means. It uses the [Language Understanding Intelligent Service(LUIS)](https://docs.microsoft.com/en-us/azure/cognitive-services/LUIS/Home) to extract intents and entities from the recognized text.
@@ -32,6 +32,7 @@ each recognition mode, see [Recognition Languages](api-reference-rest/bingvoicer
 
 Developers can choose either [REST API](GetStarted/GetStartedREST) or [Microsoft Speech Client Libraries](GetStarted/GetStartedClientLibraries) to access Microsoft speech to text services.
 
+[!div class="mx-tdBreakAll"]
 | Use cases | [REST](GetStarted/GetStartedREST) | [Client Libraries](GetStarted/GetStartedClientLibraries) |
 |-----|-----|-----|
 | Convert a short spoken audio, for example, commands (audio length < 15 s) without interim results | Yes | Yes |
@@ -40,7 +41,7 @@ Developers can choose either [REST API](GetStarted/GetStartedREST) or [Microsoft
 | Understand the text converted from audio using LUIS | No | Yes |
 
 ### Next Steps
-* Get started to use the *Speech to Text* APIs with [REST API](GetStarted/GetStartedREST) or [Client Libraries](GetStarted/GetStarted)
+* Get started to use the *Speech to Text* APIs with [REST API](GetStarted/GetStartedREST) or [Client Libraries](GetStarted/GetStarted).
 * Check out [sample applications](samples) in your preferred programming language.
 * Go to the Reference section to find [Microsoft Speech Protocol](API-Reference-REST/websocketprotocol) details and API references.
 

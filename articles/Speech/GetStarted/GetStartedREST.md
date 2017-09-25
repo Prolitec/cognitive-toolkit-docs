@@ -1,6 +1,6 @@
 ---
 title: Using REST API for speech recognition  | Microsoft Docs
-description: Using REST to access Microsoft Speech API in Microsoft Cognitive Services to convert spoken audio to text.
+description: Using REST to access Speech API in Microsoft Cognitive Services to convert spoken audio to text.
 services: cognitive-services
 author: zhouwang
 manager: wolfma
@@ -14,7 +14,12 @@ ms.author: zhouwang
 
 # Get Started with Speech Recognition using REST API
 
-With Microsoft Speech API, you can develop applications using REST API to convert spoken audio to text. This article helps you to do speech recognition via REST end point. 
+With Microsoft Speech Service, you can develop applications using REST API to convert spoken audio to text.
+
+To use Speech API REST end points, the steps are as follows:
+1. Authenticate and get a JSON Web Token (JWT) from the token service. For that you need first to subscribe to Microsoft Speech Serivce.
+2. Set the proper request header and send the request to the appropriate Microsoft Speech API REST end point.
+3. Parse the response to get your transcribed text.
 
 ## Prerequisites
 
@@ -27,15 +32,7 @@ In this example, we use a recorded audio file to illustrate the usage of the RES
 > [!NOTE]
 > The example requires that audio is recorded as wav file with **PCM single channel (mono), 16000 Hz**.
 
-## Getting started
-To use Speech API REST end point, the steps are as follows:
-1. Authenticate and get a JSON Web Token (JWT) from the token service.
-2. Set the proper request header and send the request to Bing Speech API REST end point.
-3. Parse the response to get your transcribed text.
-
-The sections following provides more details.
-
-### Get authorization token
+## Get authorization token
 To access the REST endpoint, you need a valid authorization token. To get this token, you must first have a subscription key from the Speech API, as described [here](GetStartedREST##Prerequisites). Then you can send a POST request to the token service with the subscription key, and receives in the response the access token back as a JSON Web Token (JWT), which is passed through in the Speech request header.
 
 > [!NOTE]
@@ -121,7 +118,7 @@ Content-Length: 0
 Connection: Keep-Alive
 ```
 
-### Send recognition request to the speech service 
+## Send recognition request to the speech service 
 
 To perform speech recognition, you need to make a POST request to the Microsoft speech service end points with proper request header and body. 
  
