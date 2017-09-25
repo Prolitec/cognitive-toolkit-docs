@@ -31,7 +31,6 @@ each recognition mode, see [Recognition Languages](api-reference-rest/supportedl
 
 Developers can choose either [REST APIs](GetStarted/GetStartedREST.md) or [Microsoft Speech Client Libraries](GetStarted/GetStartedClientLibraries.md) to access Microsoft speech to text services.
 
-[!div class="mx-tdBreakAll"]
 | Use cases | [REST APIs](GetStarted/GetStartedREST.md) | [Client Libraries](GetStarted/GetStartedClientLibraries.md) |
 |-----|-----|-----|
 | Convert a short spoken audio, for example, commands (audio length < 15 s) without interim results | Yes | Yes |
@@ -39,8 +38,8 @@ Developers can choose either [REST APIs](GetStarted/GetStartedREST.md) or [Micro
 | Stream audio with interim results desired | No | Yes |
 | Understand the text converted from audio using LUIS | No | Yes |
 
-### Next Steps
-* Get started to use Microsoft Speech Service with [REST APIs](GetStarted/GetStartedREST.md) or [Client Libraries](GetStarted/GetStarted.md).
+### What's next
+* Get started to use Microsoft Speech Service with [REST APIs](GetStarted/GetStartedREST.md) or [Client Libraries](GetStarted/GetStartedClientLibraries.md).
 * Check out [sample applications](samples.md) in your preferred programming language.
 * Go to the Reference section to find [Microsoft Speech Protocol](API-Reference-REST/websocketprotocol.md) details and API references.
 

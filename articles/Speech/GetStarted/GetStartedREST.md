@@ -121,7 +121,7 @@ Connection: Keep-Alive
 
 The next step for speech recognition is to send a POST request to the Microsoft Speech REST end points with proper request header and body.
 
-#### REST end points
+### REST end points
 
 The URI for the REST endpoints of speech service is defined as follows:
 ```
@@ -135,14 +135,13 @@ https://speech.platform.bing.com/speech/recognition/<RECOGNITION_MODE>/cognitive
 `<OUTPUT_FOMAT>` is an optional parameter in the query string. Its allowed values are `simple` and `detailed`. By default the service returns results in `simple` format. For details see the [Output Format](api-reference-rest/bingvoicerecognition.md#output-format) page.
 
 Some examples of service URI are as follows.
-[!div class="mx-tdBreakAll"]
 | Recognition mode  | Language | Output format | End point URI |
 |---|---|---|---|
 | interactive | pt-BR | default | https://speech.platform.bing.com/speech/recognition/interactive/cognitiveservices/v1?language=pt-BR | 
 | conversation | en-US | detailed | https://speech.platform.bing.com/speech/recognition/conversation/cognitiveservices/v1?language=en-US&format=detailed |
 | dictation | fr-FR | simple | https://speech.platform.bing.com/speech/recognition/dictation/cognitiveservices/v1?language=fr-FR&format=simple |
 
-#### Request headers
+### Request headers
 
 The follow fields must be set in the request header.
 
@@ -163,7 +162,7 @@ Transfer-Encoding: chunked
 Expect: 100-continue
 ```
 
-#### Send request to the service
+### Send request to the service
 
 The following example shows how to send a speech recognition request to Microsoft speech REST end points. It uses `interactive` recognition mode. Please replace `YOUR_AUDIO_FILE` with the path to your prerecorded audio file, and `YOUR_ACCESS_TOKEN` with the authorization token you got in the previous step [Get authorization token](##get-authorization-token)
 
@@ -234,7 +233,7 @@ using (fs = new FileStream(audioFile, FileMode.Open, FileAccess.Read))
 ```
 ---
 
-#### Speech recognition response
+## Speech recognition response
 After processing the request, Microsoft Speech Service returns the results in a response as JSON format. The code snippet below shows an example of how you can read the response from the stream.
 
 # [Powershell](#tab/Powershell)
@@ -281,3 +280,16 @@ OK
 	}]
 }
 ```
+
+## Limitations
+
+The Speech REST API has the following limitation:
+- It only supports audio stream up to 15 seconds.
+- It only supports to get the final recognition result. It is not supported by REST API to receieve interim results druing recognition.
+
+To remove these limitations, you can use Microsoft speech [client libraries]((GetStarted/GetStarted.md)) or directly work with [Speech Websocket Protocol](API-Reference-REST/websocketprotocol.md).
+
+## What's next
+
+* Check out [sample applications](samples.md) to see how to use REST API in C#, Java and etc.
+* To use more advanced features, get started to use Microsoft Speech [Client Libraries](GetStarted/GetStarted.md).
