@@ -17,33 +17,33 @@ ms.author: zhouwang
 With the cloud-based Microsoft Speech Service, you can develop applications using REST API to convert spoken audio to text.
 
 To use Speech API REST end points, the steps are as follows:
-1. Authenticate and get a JSON Web Token (JWT) from the token service of Cognitive Services. For that you need first to subscribe to Microsoft Cognitive Services.
+1. Subscribe to Microsoft Speech API to get a subscription key. Then use the subscription key to get an authorization token from the token service of Cognitive Services.
 2. Set the proper request header and send the request to the appropriate Microsoft Speech API REST end point.
 3. Parse the response to get your transcribed text.
 
 ## Prerequisites
 
 ### Subscribe to Speech API and get a free trial subscription key
-To access the REST end point, you must first subscribe to Speech API, which is part of Microsoft Cognitive Services (previously Project Oxford). After subscribing, you will have the necessary subscription keys that are needed in the following operations. Both the primary and secondary keys can be used. For subscription and key management details, see [Subscriptions](https://azure.microsoft.com/en-us/try/cognitive-services/).
+To access the REST end point, you must first subscribe to Speech API, which is part of Microsoft Cognitive Services on Azure(previously Project Oxford). After subscribing, you will have the necessary subscription keys that are needed in the following operations: Both the primary and secondary keys can be used. For subscription and key management details, see [Subscriptions](https://azure.microsoft.com/en-us/try/cognitive-services/).
 
 ### Precorded audio file
-In this example, we use a recorded audio file to illustrate the usage of the REST API. Please record a short audio file of you saying something short (e.g.: *"What is the weather like today?"* or *"Find funny movies to watch."*). The Microsoft Speech API also supports external microphone input.
+In this example, we use a recorded audio file to illustrate the usage of the REST API. Record a short audio file of you saying something short (for example: *"What is the weather like today?"* or *"Find funny movies to watch."*). The Microsoft Speech API also supports external microphone input.
 
 > [!NOTE]
-> The example requires that audio is recorded as wav file with **PCM single channel (mono), 16000 Hz**.
+> The example requires that audio is recorded as wav file with **PCM single channel (mono), 16 KHz**.
 
 ## Get authorization token
-To access the REST endpoint, you need a valid authorization token. To get this token, you must first obtain a subscription key from the Speech API, as described [here](GetStartedREST##Prerequisites). Then you sends a POST request to the token service with the subscription key, and receives in the response the access token back as a JSON Web Token (JWT).
+To access the REST endpoint, you need a valid authorization token. To get this token, you must first obtain a subscription key from the Speech API, as described [here](GetStartedREST##Prerequisites). Then you send a POST request to the token service with the subscription key, and receives in the response the access token back as a JSON Web Token (JWT).
 
 > [!NOTE]
-> The token has an expiry of 10 minutes. Please see the [Authentication](How-to/how-to-authentication.md) page for how to renew the token. 
+> The token has an expiry of 10 minutes. See the [Authentication](How-to/how-to-authentication.md) page for how to renew the token. 
 
 The token service URI is located here:
 ```
 https://api.cognitive.microsoft.com/sts/v1.0/issueToken
 ```
 
-The code sample following shows how to get authroization token, after you have obtained the subscription key. Note to replace *YOUR_SUBSCRIPTION_KEY* with your own subscription key.
+The code sample next shows how to get authorization token, after you have obtained the subscription key. Note to replace *YOUR_SUBSCRIPTION_KEY* with your own subscription key.
 
 # [Powershell](#tab/Powershell)
 ```Powershell
@@ -60,7 +60,7 @@ $OAuthToken
 
 ```
 # [curl](#tab/curl)
-The example uses curl on Linux with bash. You may need to install curl if it is not available on your platform. The example should work on Cygwin on Windows, Git Bash, zsh, and other shells too.
+The example uses curl on Linux with bash. You may need to install curl, if it is not available on your platform. The example should work on Cygwin on Windows, Git Bash, zsh, and other shells too.
 
 ```
     curl -v -X POST "https://api.cognitive.microsoft.com/sts/v1.0/issueToken" -H "Content-type: application/x-www-form-urlencoded" -H "Content-Length: 0" -H "Ocp-Apim-Subscription-Key: YOUR_SUBSCRIPTION_KEY"
@@ -106,7 +106,7 @@ The example uses curl on Linux with bash. You may need to install curl if it is 
 
 ---
 
-The POST request sent to the token service by the example above looks like as follows:
+The POST request sent to the token service by the preceding example looks like as follows:
 
 ```
 POST https://api.cognitive.microsoft.com/sts/v1.0/issueToken HTTP/1.1
@@ -128,14 +128,14 @@ The URI for the REST endpoints of speech service is defined as follows:
 https://speech.platform.bing.com/speech/recognition/<RECOGNITION_MODE>/cognitiveservices/v1?language=<LANGUAGE_TAG>&format=<OUTPUT_FORMAT>
 ```
 
-`<RECOGNITION_MODE>` specifies the recognition mode, and must be of the following values: `interactive`, `conversation`, or `dictation`. It is a part of resource path in the URI. For more information on recognition mode see the [How to choose recognition mode](How-to/how-to-choose-recognition-mode.md) page.
+`<RECOGNITION_MODE>` specifies the recognition mode, and must be of the following values: `interactive`, `conversation`, or `dictation`. It is a part of resource path in the URI. See the [How to choose recognition mode](How-to/how-to-choose-recognition-mode.md) page for more information.
 
-`<LANGUAGE_TAG>` describes the target language for audio conversion. It is required, and specified as a part of query string in the URI. It has the value as defined in the IETF language tag [BCP 47](https://en.wikipedia.org/wiki/IETF_language_tag), and must be one of the languages that are supported by the service. For example, en-us represents English (United States). The complete list of languages supported by the Speech service can be found in the page [Supported Languages](API-Reference-REST/supportedlanguages.md).
+`<LANGUAGE_TAG>` describes the target language for audio conversion. It is required, and specified as a part of query string in the URI. It uses the IETF language tag [BCP 47](https://en.wikipedia.org/wiki/IETF_language_tag), and must be one of the languages that are supported by Speech API. For example, en-US represents English (United States). The complete list of languages supported by the Speech service can be found in the page [Supported Languages](API-Reference-REST/supportedlanguages.md).
 
-`<OUTPUT_FOMAT>` is an optional parameter in the query string. Its allowed values are `simple` and `detailed`. By default the service returns results in `simple` format. For details see the [Output Format](api-reference-rest/bingvoicerecognition.md#output-format) page.
+`<OUTPUT_FOMAT>` is an optional parameter in the query string. Its allowed values are `simple` and `detailed`. By default the service returns results in `simple` format. See the [Output Format](api-reference-rest/bingvoicerecognition.md#output-format) page for details.
 
 Some examples of service URI are as follows.
-| Recognition mode  | Language | Output format | End point URI |
+| Recognition mode  | Language | Output format | REST end point |
 |---|---|---|---|
 | interactive | pt-BR | default | https://speech.platform.bing.com/speech/recognition/interactive/cognitiveservices/v1?language=pt-BR | 
 | conversation | en-US | detailed | https://speech.platform.bing.com/speech/recognition/conversation/cognitiveservices/v1?language=en-US&format=detailed |
@@ -145,12 +145,12 @@ Some examples of service URI are as follows.
 
 The follow fields must be set in the request header.
 
-* `Authorization`: The autorization field must specify `Bearer` as type and use [the authorization token](##get-authorization-token) that you have gotten from the token service as credentials.
+* `Authorization`: The authorization field must specify `Bearer` as type and use [the authorization token](##get-authorization-token) that you have gotten from the token service as credentials.
 * `Content-type`: The Content-type field describes the format and codec of the audio stream. Currently only wav file and PCM Mono 16000 encoding is supported, and the Content-type value for this format is `audio/wav; codec=audio/pcm; samplerate=16000`.
 
-The field `Transfer-Encoding` is optional. Setting this field to `chunked` allows you to chop the audio into small chunks. For more information see the page [Chunked Transfer](How-to/how-to-chunked-transfer.md).
+The field `Transfer-Encoding` is optional. Setting this field to `chunked` allows you to chop the audio into small chunks. For more information, see the page [Chunked Transfer](How-to/how-to-chunked-transfer.md).
 
-The follow is a sample request header. Please note that the token in the Authorization header is just an example.
+The follow is a sample request header. Note that the token in the Authorization header is just an example.
 
 ```
 POST https://speech.platform.bing.com/speech/recognition/interactive/cognitiveservices/v1?language=en-US&format=detailed HTTP/1.1
@@ -164,7 +164,7 @@ Expect: 100-continue
 
 ### Send request to the service
 
-The following example shows how to send a speech recognition request to Microsoft speech REST end points. It uses `interactive` recognition mode. Please replace `YOUR_AUDIO_FILE` with the path to your prerecorded audio file, and `YOUR_ACCESS_TOKEN` with the authorization token you got in the previous step [Get authorization token](##get-authorization-token)
+The following example shows how to send a speech recognition request to Microsoft speech REST end points. It uses `interactive` recognition mode. Replace `YOUR_AUDIO_FILE` with the path to your prerecorded audio file, and `YOUR_ACCESS_TOKEN` with the authorization token you got in the previous step [Get authorization token](##get-authorization-token)
 
 # [Powershell](#tab/Powershell)
 ```Powershell
@@ -234,7 +234,7 @@ using (fs = new FileStream(audioFile, FileMode.Open, FileAccess.Read))
 ---
 
 ## Speech recognition response
-After processing the request, Microsoft Speech Service returns the results in a response as JSON format. The code snippet below shows an example of how you can read the response from the stream.
+After processing the request, Microsoft Speech Service returns the results in a response as JSON format. The following code snippet shows an example of how you can read the response from the stream.
 
 # [Powershell](#tab/Powershell)
 ```Powershell
@@ -285,7 +285,7 @@ OK
 
 The Speech REST API has the following limitation:
 - It only supports audio stream up to 15 seconds.
-- It only supports to get the final recognition result. It is not supported by REST API to receieve interim results druing recognition.
+- It only supports to get the final recognition result. It is not supported by REST API to receive interim results during recognition.
 
 To remove these limitations, you can use Microsoft speech [client libraries]((GetStarted/GetStarted.md)) or directly work with [Speech Websocket Protocol](API-Reference-REST/websocketprotocol.md).
 
