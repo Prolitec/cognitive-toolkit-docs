@@ -46,6 +46,7 @@ https://api.cognitive.microsoft.com/sts/v1.0/issueToken
 The code sample next shows how to get authorization token, after you have obtained the subscription key. Note to replace *YOUR_SUBSCRIPTION_KEY* with your own subscription key.
 
 # [Powershell](#tab/Powershell)
+
 ```Powershell
 $FetchTokenHeader = @{
   'Content-type'='application/x-www-form-urlencoded';
@@ -59,7 +60,9 @@ $OAuthToken = Invoke-RestMethod -Method POST -Uri https://api.cognitive.microsof
 $OAuthToken
 
 ```
+
 # [curl](#tab/curl)
+
 ```
 # The example uses curl on Linux with bash. You may need to install curl, if it is not available on your platform. 
 # The example should work on Cygwin on Windows, Git Bash, zsh, and other shells too.
@@ -68,6 +71,7 @@ curl -v -X POST "https://api.cognitive.microsoft.com/sts/v1.0/issueToken" -H "Co
 ```
 
 # [C#](#tab/CSharp)
+
 ```cs
     /*
      * This class demonstrates how to get a valid authorization token.
@@ -104,6 +108,7 @@ curl -v -X POST "https://api.cognitive.microsoft.com/sts/v1.0/issueToken" -H "Co
         }
     }
 ```
+
 ---
 
 The POST request sent to the token service by the preceding example looks like as follows:
@@ -167,6 +172,7 @@ Expect: 100-continue
 The following example shows how to send a speech recognition request to Microsoft speech REST end points. It uses `interactive` recognition mode. Replace `YOUR_AUDIO_FILE` with the path to your prerecorded audio file, and `YOUR_ACCESS_TOKEN` with the authorization token you got in the previous step [Get authorization token](##get-authorization-token)
 
 # [Powershell](#tab/Powershell)
+
 ```Powershell
 
 $SpeechServiceURI =
@@ -190,11 +196,13 @@ $RecoResponse
 ```
 
 # [cURL](#tab/cURL)
+
 ```
 curl -v -X POST "https://speech.platform.bing.com/speech/recognition/interactive/cognitiveservices/v1?language=en-us&format=detailed" -H "Transfer-Encoding: chunked" -H "Authorization: Bearer YOUR_ACCESS_TOKEN" -H "Content-type: audio/wav; codec=audio/pcm; samplerate=16000" --data-binary @YOUR_AUDIO_FILE
 ```
 
 # [C#](#tab/CSharp)
+
 ```cs
 HttpWebRequest request = null;
 request = (HttpWebRequest)HttpWebRequest.Create(requestUri);
@@ -231,18 +239,21 @@ using (fs = new FileStream(audioFile, FileMode.Open, FileAccess.Read))
     }
 }
 ```
+
 ---
 
 ## Speech recognition response
 After processing the request, Microsoft Speech Service returns the results in a response as JSON format. The following code snippet shows an example of how you can read the response from the stream.
 
 # [Powershell](#tab/Powershell)
+
 ```Powershell
 # show the response in JSON format
 ConvertTo-Json $RecoResponse
 ```
 
 # [C#](#tab/CSharp)
+
 ```cs
 /*
 * Get the response from the service.
@@ -261,6 +272,7 @@ using (WebResponse response = request.GetResponse())
     Console.ReadLine();
 }
 ```
+
 ---
 
 The following is a sample JSON response:
