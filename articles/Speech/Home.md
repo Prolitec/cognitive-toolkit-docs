@@ -1,6 +1,6 @@
 ﻿---
-title: Microsoft Speech API in Microsoft Cognitive Services | Microsoft Docs
-description: Use the Microsoft Speech API to add speech-driven actions to your apps, including real-time interaction with users.
+title: Microsoft Speech API in Cognitive Services | Microsoft Docs
+description: Use Microsoft Speech API to add speech-driven actions to your apps, including real-time interaction with users.
 services: cognitive-services
 author: priyaravi20
 manager: yanbo
@@ -13,7 +13,7 @@ ms.author: prrajan
 ---
 # Microsoft Speech API overview
 
-Microsoft Speech API provides you easy-to-use APIs to create powerful speech-enabled features in your applications, like voice command control, user dialog using natural speech conversation, and speech transcription and dictation. The Microsoft Speech API supports both *Speech to Text* and *Text to Speech* conversion.
+The cloud-based Microsoft Speech API provides developers with access to advanced speech recognition technologies in order to create powerful speech-enabled features in their applications, like voice command control, user dialog using natural speech conversation, and speech transcription and dictation. The Microsoft Speech API supports both *Speech to Text* and *Text to Speech* conversion.
 
 * **Speech to Text** API converts human speech to text that can be used as input or commands to control your application.
 * **Text to Speech** API converts text to audio streams that can be played back to the user of your application.
@@ -32,7 +32,7 @@ each recognition mode, see [Recognition Languages](api-reference-rest/supportedl
 Developers can choose either [REST APIs](GetStarted/GetStartedREST.md) or [Microsoft Speech Client Libraries](GetStarted/GetStartedClientLibraries.md) to access Microsoft speech to text services.
 
 [!div class="mx-tdBreakAll"]
-| Use cases | [REST APIs](GetStarted/GetStartedREST) | [Client Libraries](GetStarted/GetStartedClientLibraries) |
+| Use cases | [REST APIs](GetStarted/GetStartedREST.md) | [Client Libraries](GetStarted/GetStartedClientLibraries.md) |
 |-----|-----|-----|
 | Convert a short spoken audio, for example, commands (audio length < 15 s) without interim results | Yes | Yes |
 | Convert a long audio (> 15 s) | No | Yes |
@@ -40,9 +40,9 @@ Developers can choose either [REST APIs](GetStarted/GetStartedREST.md) or [Micro
 | Understand the text converted from audio using LUIS | No | Yes |
 
 ### Next Steps
-* Get started to use Microsoft Speech Service with [REST APIs](GetStarted/GetStartedREST) or [Client Libraries](GetStarted/GetStarted).
-* Check out [sample applications](samples) in your preferred programming language.
-* Go to the Reference section to find [Microsoft Speech Protocol](API-Reference-REST/websocketprotocol) details and API references.
+* Get started to use Microsoft Speech Service with [REST APIs](GetStarted/GetStartedREST.md) or [Client Libraries](GetStarted/GetStarted.md).
+* Check out [sample applications](samples.md) in your preferred programming language.
+* Go to the Reference section to find [Microsoft Speech Protocol](API-Reference-REST/websocketprotocol.md) details and API references.
 
 ## Text to speech (speech synthesis)
 *Text to Speech* APIs use REST to convert structured text to an audio stream. The APIs provide fast text to speech
