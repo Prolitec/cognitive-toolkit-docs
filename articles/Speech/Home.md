@@ -24,8 +24,8 @@ The *Speech to Text* API *transcribes* audio streams into text that your applica
 * Multiple recognition modes to enable optimized results in different user scenarios. The Microsoft Speech API currently supports *interactive*, *conversation*, and *dictation* mode.
 * Real-time continuous recognition. The *Speech to Text* supports client to receive the interim recognition results of the words that have been recognized so far. The speech service also supports end-of-speech detection.
 * Support many spoken languages in multiple dialects. For the full list of supported languages in
-each recognition mode, see [Recognition Languages](api-reference-rest/supportedlanguages.md). It also supports capitalization and punctuation, masking profanity, and text normalization.
-* Integration with language understanding. Besides converting the input audio into text, the *Speech to Text* provides applications an additional capability to understand what the text means. It uses the [Language Understanding Intelligent Service(LUIS)](../cognitive-services/LUIS/Home.md) to extract intents and entities from the recognized text.
+each recognition mode, see [Recognition Languages](api-reference-rest/supportedlanguages.md). The service also supports additional formatting capability, like capitalization and punctuation, masking profanity, and text normalization.
+* Integration with language understanding. Besides converting the input audio into text, the *Speech to Text* provides applications an additional capability to understand what the text means. It uses the [Language Understanding Intelligent Service(LUIS)](../LUIS/Home.md) to extract intents and entities from the recognized text.
 * Provide both Representational State Transfer (REST) APIs and client libraries for running on various platforms (Windows, Android, iOS) using different languages (C#, Java, JavaScript, ObjectiveC).
 
 Developers can choose either [REST APIs](GetStarted/GetStartedREST.md) or [Microsoft Speech Client Libraries](GetStarted/GetStartedClientLibraries.md) to access Microsoft speech to text services.
