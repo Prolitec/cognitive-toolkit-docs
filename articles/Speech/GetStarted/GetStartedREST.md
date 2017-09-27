@@ -79,7 +79,10 @@ Expect: 100-continue
 
 ### Send request to the service
 
-The following example shows how to send a speech recognition request to Microsoft speech REST end points. It uses `interactive` recognition mode. Replace `YOUR_AUDIO_FILE` with the path to your prerecorded audio file, and `YOUR_SUBSCRIPTION_KEY` with your own subscription key.
+The following example shows how to send a speech recognition request to Microsoft speech REST end points. It uses `interactive` recognition mode.
+
+> [!NOTE]
+> Replace `YOUR_AUDIO_FILE` with the path to your prerecorded audio file, and `YOUR_SUBSCRIPTION_KEY` with your own subscription key.
 
 # [Powershell](#tab/Powershell)
 

@@ -23,16 +23,25 @@ When using Speech API, it returns a HTTP "403 Forbidded" error.
 
 ### Cause
 
-This is often caused by authorization issues, such as 
-- the subscription key is missing or invalid
-- the subscription key exceeds usage quota
-- the Authorization header is missing in the request when using REST
-- the access token specified in the Authorization header is invalid
-- the access token is expired
-Authorizatio token is expired or invalid
+This is often caused by authentication issues. Connection requests without valid `Ocp-Apim-Subscription-Key` or `Authorization` header are rejected by the service with a 403 Forbidden HTTP response.
+
+If you are using subscription key for authentication, the reason could be
+- the subscription key is missing or invalid, or
+- the subscription key exceeds usage quota, or
+- the `Ocp-Apim-Subscription-Key` field is not set in the request header, when REST API is called.
+
+If you are using authorization token for authentication, the following reasons could cause the error.
+- the `Authorization` header is missing in the request when using REST, or
+- the authorization token specified in the Authorization header is invalid, or
+- the authorization token is expired. The access token has an expiry of 10 minutes.
+
+For more information on authentication, refer to the [Authentication](How-to/how-to-authentication.md) page.
 
 ### Troubleshooting steps
-1. Verfiy that your subscription key is valid. You can run the following command for verfication. Note to replace *YOUR_SUBSCRIPTION_KEY* with your own subscription key. If your subscription is valid, you will see in the response the access token as a JSON Web Token (JWT). Otherwise you will get an error as response.
+1. Verfiy that your subscription key is valid. You can run the following command for verfication. Note to replace *YOUR_SUBSCRIPTION_KEY* with your own subscription key. If your subscription is valid, you will receive in the response the authorization token as a JSON Web Token (JWT). Otherwise you will get an error in response.
+
+> [!NOTE]
+> Replace `YOUR_SUBSCRIPTION_KEY` with your own subscription key.
 
 # [Powershell](#tab/Powershell)
 
@@ -59,12 +68,15 @@ curl -v -X POST "https://api.cognitive.microsoft.com/sts/v1.0/issueToken" -H "Co
 ```
 ---
 
-2. If you are using Speech Client Libraries, put the same subscription key into your application as used in step 1.
+2. Make sure that you use the same subscription key in your application or in the REST reqeust as that is used in step 1.
 
-3. If you are using REST API, run the following command to make a POST request to the service. Note to replace `YOUR_AUDIO_FILE` with the path to a prerecorded audio file, and `YOUR_ACCESS_TOKEN` with the access toek returned in step 1. The expected result is a response message from the service. If you still receive HTTP 403 error, please double-check the access token is not expired.
+3. If you use authorization token for authentication, verfiy that the token is still valid. Run the following command to make a POST request to the service, and expect a response message from the service. If you still receive HTTP 403 error, please double-check the access token is set correctly and not expired.
 
 > [!IMPORTANT]
 > The token has an expiry of 10 minutes.
+
+> [!NOTE]
+> Replace `YOUR_AUDIO_FILE` with the path to your prerecorded audio file, and `YOUR_ACCESS_TOKEN` with the authorization token returned in the previous step.
 
 # [Powershell](#tab/Powershell)
 
@@ -100,7 +112,7 @@ curl -v -X POST "https://speech.platform.bing.com/speech/recognition/interactive
 
 ## I got HTTP error of "400 Bad Reqeust".
 
-This is usually because that the request body contains invalid audio data. Currently we support only WAV file.
+This is usually because that the request body contains invalid audio data. Currently we only support WAV file.
 
 ## I got HTTP error of "408 Request Timeout".
 
@@ -109,6 +121,7 @@ The most common reason is that no audio data is sent to the service, and the ser
 ## The RecognitionStatus in the response is `InitialSilenceTimeout`.
 
 This is usually caused by issues in audio data, such as
-- the audio has a long sileince 
+- the audio has a long sileince time at the begining. The service will stop the recognition after some number of seconds and returns `InitialSilenceTimeout`.
+- the audio uses unsupported codec format, which makes the audio data be treated as slience.
 
 

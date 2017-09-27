@@ -1,6 +1,6 @@
 ---
-title: How to authenticate to use Speech Client APIs | Microsoft Docs
-description: How to authenticate to use Speech Client APIs
+title: How to authenticate to Microsoft Speech API | Microsoft Docs
+description: How to request authentication to use Microsoft Speech API
 services: cognitive-services
 author: zhouwang
 manager: wolfma
@@ -12,57 +12,53 @@ ms.date: 09/15/2017
 ms.author: zhouwang
 ---
 
-# How to authenticate to use Speech Client APIs
+# How to authenticate to Microsoft Speech API
 
-**Not Completed Yet**
+Microsoft Speech Service support two ways for authentication.
+- using subscription key
+- using authorization token
 
-## Using Subscription Key
-#### Subscribe to Speech API and get a free trial subscription key
-To access the REST end point, you must subscribe to Speech API which is part of Microsoft Cognitive Services (previously Project Oxford). After subscribing, you will have the necessary subscription keys to execute this operation. Both the primary and secondary keys can be used. For subscription and key management details, see [Subscriptions](https://azure.microsoft.com/en-us/try/cognitive-services/). 
+## Using subscription key
 
+To use Microsoft Speech Service, you must first subscribe to Speech API which is part of Microsoft Cognitive Services (previously Project Oxford). You can get free trial subscription keys from the [Cognitive Services Subscription](https://azure.microsoft.com/en-us/try/cognitive-services/) page. After you select the Speech API, click Get API Key to get the key. It returns a primary and secondary key. Both keys are tied to the same quota, so you may use either key.
 
-After you select the services that you want, click Subscribe to get the key. Each service returns a primary and secondary key. Both keys are tied to the same quota, so you may use either key. If you feel that the key has been compromised, click Regenerate to get a new key. Regenerating the key will not reset your quota.
-If you need a higher number of transactions per second or per month, click Buy to get a paid subscription.
+For long-term use or an increased quota sign-up an [Azure account](https://azure.microsoft.com/en-us/free/).
 
-## Authorization 
+For using Speech REST API, you need to pass the subscription key in the `Ocp-Apim-Subscription-Key` field in the request header.
 
-In addition to the standard web socket handshake headers, speech requests require an *Authorization* header. Connection requests without this header are rejected 
-by the service with a 403 Forbidden HTTP response.
+Name| Format| Description
+----|-------|------------
+Ocp-Apim-Subscription-Key | ASCII | YOUR_SUBSCRIPTION_KEY
 
-The *Authorization* header must contain a JSON Web Token (JWT) access token.
-
-For information about subscribing and obtaining API keys that are used to retrieve valid JWT access tokens, see [Get Started for Free](https://www.microsoft.com/cognitive-services/en-US/sign-up?ReturnUrl=/cognitive-services/en-us/subscriptions?productId=%2fproducts%2fBing.Speech.Preview).
-
-The API key is passed to the token service. For example:
+The following is an example of request header.
 
 ```
-POST https://api.cognitive.microsoft.com/sts/v1.0/issueToken
-Content-Length: 0
+POST https://speech.platform.bing.com/speech/recognition/interactive/cognitiveservices/v1?language=en-US&format=detailed HTTP/1.1
+Accept: application/json;text/xml
+Content-Type: audio/wav; codec=audio/pcm; samplerate=16000
+Ocp-Apim-Subscription-Key: YOUR_SUBSCRIPTION_KEY
+Host: speech.platform.bing.com
+Transfer-Encoding: chunked
+Expect: 100-continue
 ```
 
-The required header information for token access is as follows.
+## Using authorization token
 
-Name	| Format	| Description
----------|---------|--------
-Ocp-Apim-Subscription-Key |	ASCII	| Your subscription key
+Alternatively, you can use authorization token for authentication as proof of the authentication/authorization. To get this token, you must first obtain a subscription key from the Speech API, as described in the [preceding section](##using-subscription-key).
 
-The token service returns the JWT access token as `text/plain`. Then the JWT is passed as a `Base64 access_token` to the handshake as an authorization header prefixed with the string `Bearer`. For example:
+### Get authorization token
 
-`Authorization: Bearer [Base64 access_token]`
-
-
-## Get access token
-The Speech REST API requires the client to authenticate with a valid access token as proof of the authentication/authorization. To get this token, you must first obtain a subscription key from the Speech API, as described [here](GetStartedREST##Prerequisites). Then you send a POST request to the token service with the subscription key, and receives in the response the access token back as a JSON Web Token (JWT).
+After you have a valid subscription key, send a POST request to the token service of Cognitive Services, and receive in the response the authorization token as a JSON Web Token (JWT).
 
 > [!NOTE]
-> The token has an expiry of 10 minutes. See the [Authentication](How-to/how-to-authentication.md) page for how to renew the token. 
+> The token has an expiry of 10 minutes. See the following section for how to renew the token.
 
 The token service URI is located here:
 ```
 https://api.cognitive.microsoft.com/sts/v1.0/issueToken
 ```
 
-The code sample next shows how to get access token, after you have obtained the subscription key. Note to replace *YOUR_SUBSCRIPTION_KEY* with your own subscription key.
+The code sample next shows how to get an access token. Note to replace *YOUR_SUBSCRIPTION_KEY* with your own subscription key.
 
 # [Powershell](#tab/Powershell)
 
@@ -138,4 +134,165 @@ Host: api.cognitive.microsoft.com
 Content-type: application/x-www-form-urlencoded
 Content-Length: 0
 Connection: Keep-Alive
+```
+
+### Use authorization token in request
+
+Each time when you call Speech API, you need to pass the authorization token in the `Authorization` header. The *Authorization* header must contain a JSON Web Token (JWT) access token.
+
+The following example shows how to use authorization token when calling Speech REST API. 
+
+> [!NOTE] Replace `YOUR_AUDIO_FILE` with the path to your prerecorded audio file, and `YOUR_ACCESS_TOKEN` with the authorization token you got in the previous step [Get authorization token](###get-authorization-token)
+
+# [Powershell](#tab/Powershell)
+
+```Powershell
+
+$SpeechServiceURI =
+'https://speech.platform.bing.com/speech/recognition/interactive/cognitiveservices/v1?language=en-us&format=detailed'
+
+# $OAuthToken is the authrization token returned by the token service.
+$RecoRequestHeader = @{
+  'Authorization' = 'Bearer '+ $OAuthToken;
+  'Transfer-Encoding' = 'chunked'
+  'Content-type' = 'audio/wav; codec=audio/pcm; samplerate=16000'
+}
+
+# Read audio into byte array
+$audioBytes = [System.IO.File]::ReadAllBytes("YOUR_AUDIO_FILE")
+
+$RecoResponse = Invoke-RestMethod -Method POST -Uri $SpeechServiceURI -Headers $RecoRequestHeader -Body $audioBytes
+
+# Show the result
+$RecoResponse
+
+```
+
+# [curl](#tab/curl)
+
+```
+curl -v -X POST "https://speech.platform.bing.com/speech/recognition/interactive/cognitiveservices/v1?language=en-us&format=detailed" -H "Transfer-Encoding: chunked" -H "Authorization: Bearer YOUR_ACCESS_TOKEN" -H "Content-type: audio/wav; codec=audio/pcm; samplerate=16000" --data-binary @YOUR_AUDIO_FILE
+```
+
+# [C#](#tab/CSharp)
+
+```cs
+HttpWebRequest request = null;
+request = (HttpWebRequest)HttpWebRequest.Create(requestUri);
+request.SendChunked = true;
+request.Accept = @"application/json;text/xml";
+request.Method = "POST";
+request.ProtocolVersion = HttpVersion.Version11;
+request.Host = @"speech.platform.bing.com";
+request.ContentType = @"audio/wav; codec=audio/pcm; samplerate=16000";
+request.Headers["Authorization"] = "Bearer " + token;
+
+// Send an audio file by 1024 byte chunks
+using (fs = new FileStream(audioFile, FileMode.Open, FileAccess.Read))
+{
+
+    /*
+    * Open a request stream and write 1024 byte chunks in the stream one at a time.
+    */
+    byte[] buffer = null;
+    int bytesRead = 0;
+    using (Stream requestStream = request.GetRequestStream())
+    {
+        /*
+        * Read 1024 raw bytes from the input audio file.
+        */
+        buffer = new Byte[checked((uint)Math.Min(1024, (int)fs.Length))];
+        while ((bytesRead = fs.Read(buffer, 0, buffer.Length)) != 0)
+        {
+            requestStream.Write(buffer, 0, bytesRead);
+        }
+
+        // Flush
+        requestStream.Flush();
+    }
+}
+```
+
+---
+
+### Renew authorization token
+
+The authorization token will expire after a certain time period (currently 10 minutes). You need to renew the authorization token before its expiration.
+
+The code below is an example implementation in C# for how to renew the authorization token:
+
+```cs
+    /*
+     * This class demonstrates how to get a valid O-auth token.
+     */
+    public class Authentication
+    {
+        public static readonly string FetchTokenUri = "https://api.cognitive.microsoft.com/sts/v1.0";
+        private string subscriptionKey;
+        private string token;
+        private Timer accessTokenRenewer;
+
+        //Access token expires every 10 minutes. Renew it every 9 minutes.
+        private const int RefreshTokenDuration = 9;
+
+        public Authentication(string subscriptionKey)
+        {
+            this.subscriptionKey = subscriptionKey;
+            this.token = FetchToken(FetchTokenUri, subscriptionKey).Result;
+
+            // renew the token on set duration.
+            accessTokenRenewer = new Timer(new TimerCallback(OnTokenExpiredCallback),
+                                           this,
+                                           TimeSpan.FromMinutes(RefreshTokenDuration),
+                                           TimeSpan.FromMilliseconds(-1));
+        }
+
+        public string GetAccessToken()
+        {
+            return this.token;
+        }
+
+        private void RenewAccessToken()
+        {
+            this.token = FetchToken(FetchTokenUri, this.subscriptionKey).Result;
+            Console.WriteLine("Renewed token.");
+        }
+
+        private void OnTokenExpiredCallback(object stateInfo)
+        {
+            try
+            {
+                RenewAccessToken();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(string.Format("Failed renewing access token. Details: {0}", ex.Message));
+            }
+            finally
+            {
+                try
+                {
+                    accessTokenRenewer.Change(TimeSpan.FromMinutes(RefreshTokenDuration), TimeSpan.FromMilliseconds(-1));
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(string.Format("Failed to reschedule the timer to renew access token. Details: {0}", ex.Message));
+                }
+            }
+        }
+
+        private async Task<string> FetchToken(string fetchUri, string subscriptionKey)
+        {
+            using (var client = new HttpClient())
+            {
+                client.DefaultRequestHeaders.Add("Ocp-Apim-Subscription-Key", subscriptionKey);
+                UriBuilder uriBuilder = new UriBuilder(fetchUri);
+                uriBuilder.Path += "/issueToken";
+
+                var result = await client.PostAsync(uriBuilder.Uri.AbsoluteUri, null);
+                Console.WriteLine("Token Uri: {0}", uriBuilder.Uri.AbsoluteUri);
+                return await result.Content.ReadAsStringAsync();
+            }
+        }
+    }
 ```
