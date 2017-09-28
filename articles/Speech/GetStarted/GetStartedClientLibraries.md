@@ -14,9 +14,12 @@ ms.author: zhouwang
 
 # Get Started with Microsoft Speech Client Libraries
 
-<Not Completed Yet>
+Besides making direct HTTP reqeusts via REST API, Microsoft Speech Services also provides developers with Speech Client Libraries in different languages. The Speech Client Libraries
+- support more advacned capabilties in speech recognition, like getting intermediate results in real-time, long audio stream (up to 10 minutes), continuous recognition. These functionalities are not available in REST API due to technical limiations.
+- provide simple and idiomatic API in the langugae of your perferece.
+- hide low-level communication details.
 
-With Microsoft Speech Client Libraries you can develop applications to convert spoken audio to text. 
+Currently, the following Microsoft Speech Client Libraries are available:
 
 ## [C# desktop libaries](GetStartedCSharpDesktop)
 
@@ -27,4 +30,3 @@ With Microsoft Speech Client Libraries you can develop applications to convert s
 ## [Java Libaries for Android] (GetStartedJavaAndroid)
 
 ## [ObjectiveC libraies for iOS] (Get-Started-ObjectiveC-iOS)
-

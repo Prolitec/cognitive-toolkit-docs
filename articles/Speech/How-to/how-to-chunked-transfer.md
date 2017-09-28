@@ -19,9 +19,20 @@ Bing Speech API supports chuncked transfer encoding for efficient audio streamin
 > [!NOTE]
 > You may not upload more than 10 seconds of audio in any one request and the total request duration cannot exceed 14 seconds. 
 
-The code snippet below shows an example of an audio file being chunked into 1024 byte chunks.
+The code snippet below shows how to set the chunked transfer encoding and send an audio file being chunked into 1024 byte chunks.
 
 ```cs
+
+HttpWebRequest request = null;
+request = (HttpWebRequest)HttpWebRequest.Create(requestUri);
+request.SendChunked = true;
+request.Accept = @"application/json;text/xml";
+request.Method = "POST";
+request.ProtocolVersion = HttpVersion.Version11;
+request.Host = @"speech.platform.bing.com";
+request.ContentType = @"audio/wav; codec=audio/pcm; samplerate=16000";
+request.Headers["Ocp-Apim-Subscription-Key"] = "YOUR_SUBSCRIPTION_KEY";
+
 using (fs = new FileStream(audioFile, FileMode.Open, FileAccess.Read))
 {
 

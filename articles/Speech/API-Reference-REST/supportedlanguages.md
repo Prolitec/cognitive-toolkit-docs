@@ -14,7 +14,7 @@ ms.author: zhouwang
 
 #Supported Languages 
 
-Microsoft Speech Service supports many different languages that a user can speak. You may choose to build an application that supports one or all of the languages that are supported by the service. Please refer to [Speech Recognition API reference](bingvoicerecognition#recognition-language) about how to specify the recognition lanugage.
+Microsoft Speech Service supports many different languages that a user can speak. You may choose to build an application that supports one or all of the languages that are supported by the service.
 
 ## Interactive and dictation mode
 The Microsoft Speech Recognition API supports the following languages in `interactive` and `dictation` modes. 
