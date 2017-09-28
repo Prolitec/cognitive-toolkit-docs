@@ -21,12 +21,12 @@ Besides making direct HTTP reqeusts via REST API, Microsoft Speech Services also
 
 Currently, the following Microsoft Speech Client Libraries are available:
 
-## [C# desktop libaries](GetStartedCSharpDesktop)
+- [C# desktop libaries](GetStartedCSharpDesktop.md)
 
-## [C# service libraries] (GetStartedCSharpServiceLibrary)
+- [C# service libraries](GetStartedCSharpServiceLibrary.md)
 
-## [JavaScript libaries](GetStartedJSWebsockets)
+- [JavaScript libaries](GetttingStartedJSWebsockets.md)
 
-## [Java Libaries for Android] (GetStartedJavaAndroid)
+- [Java Libaries for Android](GetStartedJavaAndroid.md)
 
-## [ObjectiveC libraies for iOS] (Get-Started-ObjectiveC-iOS)
+- [ObjectiveC libraies for iOS](Get-Started-ObjectiveC-iOS.md)
